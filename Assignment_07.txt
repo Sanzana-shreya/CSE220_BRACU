@@ -1,0 +1,113 @@
+#Task_01
+
+class KeyIndex:
+    def __init__ (self,arr):
+        self.k=[]
+        self.negative=0
+        min_value=arr[0]
+        max_value=arr[0]
+        for x in arr[1:]:
+            if x<min_value:
+                min_value=x
+            if x>min_value:
+                max_value=x
+        if min_value<0:
+            self.negative=min_value*(-1)
+        self.k=[0]*(max_value+self.negative+1)
+        
+        count=0
+        for x in range(len(arr)):
+            count+=1
+            self.k[x+self.negative]+=1
+            #count+=1
+            
+    def search(self,number):
+        if number+self.negative<len(self.k) and self.k[x+self.negative]:
+            return True
+        return False
+    
+    def sort(self):
+        List=[]
+        for y in range(len(self.k)):
+            for z in range(self.k[y]):
+                    List.append(y-self.negative) 
+        return List
+
+ans=KeyIndex([-2,-10,20,-4,1,6])
+print(ans.search(20))
+print(ans.sort()))
+ 
+Outputs:
+
+False
+[0, 1, 2, 3, 4, 5]
+
+#Task_02
+
+vowels = ["A", "E", "I", "O", "U"]
+consonants = ["B", "C", "D", "F", "G", "H", "J", "K", "L",
+              "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z"]
+
+
+class Hashstring:
+    def __init__(self, str):
+        self.str = str
+
+    def string_get(self):
+        return self.str
+
+    def string_key(self):
+        value = 0
+        n = 0
+        for x in self.str:
+            if x in consonants:
+                value += 1
+            if x not in consonants and x not in vowels:
+                n += int(x)
+        s_key = ((value * 24) + n)
+        return s_key
+
+
+class Hashtable:
+    def __init__(self, size=9):
+        self.size = size
+        self.list = [0] * size
+
+    def function(self, string_key):
+        return string_key % self.size
+
+    def add(self, s):
+        value = s.string_key()
+        position = self.function(value)
+        for y in range(1, self.size):
+            if self.list[position] == 0:
+                self.list[position] = s.string_get()
+                break
+            else:
+                position = (value+y) % self.size
+
+    def print(self):
+        for y in range(self.size):
+            print(self.list[y])
+
+
+hash_table = Hashtable()
+List = ["X9ZAR2JD6F7", "ZJO9V49NDOU", "G94F5SMC2DG", "KD9LNX46TT2",
+        "WN2NY54F22D", "YVRFKVUOH6Y", "NJ89I7DN7V8", "5W8UWJSDCJH", "5YLHRBO79CT"]
+for x in List:
+    v = Hashstring(x)
+    hash_table.add(v)
+hash_table.print()
+
+
+Outputs:
+
+KD9LNX46TT2
+WN2NY54F22D
+YVRFKVUOH6Y
+NJ89I7DN7V8
+5W8UWJSDCJH
+5YLHRBO79CT
+X9ZAR2JD6F7
+ZJO9V49NDOU
+G94F5SMC2DG

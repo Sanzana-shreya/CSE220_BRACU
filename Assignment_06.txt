@@ -1,0 +1,388 @@
+#Task_01
+def min_Index( a , i , j ):
+    if i == j:
+        return i
+    k = min_Index(a, i + 1, j)
+    return (i if a[i] < a[k] else k)
+     
+
+def recursed_Selection_Sort(a, n, index = 0):
+    if index == n:
+        return -1
+    k = min_Index(a, index, n-1)
+    if k != index:
+        a[k], a[index] = a[index], a[k]
+    recursed_Selection_Sort(a, n, index + 1)
+     
+# Driver code
+array = [7, 1, 6, 2, 4, 0]
+n = len(array)
+ 
+
+recursed_Selection_Sort(array, n)
+ 
+
+for i in array:
+    print(i, end = ' ')
+
+
+Output:
+
+0 1 2 4 6 7 
+
+
+
+#Task_02
+def insertion_sort(a, Len):
+
+    if Len <= 1:
+        return
+    insertion_sort(a, Len - 1)
+    end = a[Len - 1]
+    
+    i = Len - 2
+    while(i>=0 and a[i] > end):
+
+        a[i+1] = a[i]
+        i = i - 1
+
+    a[i + 1] = end
+
+array = [10, 1, 7, 0, 2]
+print("The Original array is: ", array)
+
+insertion_sort(array, len(array))
+print("The Sorted array is :", array)
+
+
+
+Output:
+
+The Original array is:  [10, 1, 7, 0, 2]
+The Sorted array is : [0, 1, 2, 7, 10]
+
+
+#Task_03
+class Node:
+    def __init__(self, data=None, link=None):
+        self.data=data
+        self.link=link
+    def __str__(self):
+        return str(self.data)
+
+
+class Linear_List:
+    def __init__(self, start=None,nodecount=0):
+        self.start=start
+        self.nodecount=nodecount 
+    def addBegNode(self, value=None):
+        node=Node(value)
+        node.link=self.start
+        self.start=node
+        self.nodecount=self.nodecount+1
+
+    def print_List(self):
+        ptr=self.start
+        while ptr:
+            print(ptr)
+            ptr=ptr.link
+        print()
+    
+    def bubble_sort(self):
+        for i in range(self.nodecount-1):
+            curr=self.start
+            nxt=curr.link
+            prev=None
+            while nxt:
+                if curr.data>nxt.data:
+                    if prev==None:
+                        prev=curr.link
+                        nxt=nxt.link
+                        prev.link=curr
+                        curr.link=nxt
+                        self.start=prev
+                    else:   
+                        temp=nxt
+                        nxt=nxt.link
+                        prev.link=curr.link
+                        prev=temp
+                        temp.link=curr
+                        curr.link=nxt
+                else:           
+                    prev=curr
+                    curr=nxt
+                    nxt=nxt.link
+            i+=1             
+
+ll=Linear_List()
+num= input('How many elements to be added in the Linked List??')
+
+for count in range(int(num)):
+    element= input('Enter a value to be added at the beginning of the Linked List ')
+    ll.addBegNode(element)
+    count+=1
+print("Linked List before sorting")
+ll.print_List()
+ll.bubble_sort() 
+print("Linked List after sorting")
+ll.print_List()
+
+
+Output:
+
+
+How many elements to be added in the Linked List??6
+Enter a value to be added at the beginning of the Linked List 2
+Enter a value to be added at the beginning of the Linked List 0
+Enter a value to be added at the beginning of the Linked List 8
+Enter a value to be added at the beginning of the Linked List 6
+Enter a value to be added at the beginning of the Linked List 4
+Enter a value to be added at the beginning of the Linked List 2
+Linked List before sorting
+2
+4
+6
+8
+0
+2
+
+Linked List after sorting
+0
+2
+2
+4
+6
+8
+
+
+
+#Task_04
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        
+def swapNodes(head_ref, currX, currY, prevY) :
+    head_ref = currY
+    prevY.next = currX
+    temp = currY.next
+    currY.next = currX.next
+    currX.next = temp
+    return head_ref
+ 
+
+def recurSelectionSort( head) :
+    if (head.next == None) :
+        return head
+    min = head
+    beforeMin = None
+    ptr = head
+    while ( ptr.next != None ):
+        if (ptr.next.data < min.data) :
+            min = ptr.next
+            beforeMin = ptr    
+        ptr = ptr.next
+    if (min != head) :
+        head = swapNodes(head, head, min, beforeMin)
+    head.next = recurSelectionSort(head.next)
+    return head
+
+def sort( head_ref) :
+    if ((head_ref) == None) :
+        return None
+    head_ref = recurSelectionSort(head_ref)
+    return head_ref
+ 
+def push( head_ref, new_data) :
+    new_node = Node(0)
+    new_node.data = new_data
+    new_node.next = (head_ref)
+    (head_ref) = new_node
+    return head_ref
+def printList( head) :
+    while (head != None) :
+        print( head.data ,end = " ")
+        head = head.next
+
+# Driver code
+head = None
+head = push(head, 2)
+head = push(head, 8)
+head = push(head, 6)
+head = push(head, 17)
+head = push(head, 0)
+ 
+print( "Linked list before sorting:")
+printList(head)
+head = sort(head)
+print( "\nLinked list after sorting:")
+printList(head)
+
+
+ 
+Output:
+
+Linked list before sorting:
+0 17 6 8 2 
+Linked list after sorting:
+0 2 6 8 17 
+
+
+
+
+#Task_05
+class Node:
+     
+    def __init__(self, data):
+        self.data = data
+        self.prev = None
+        self.next = None
+
+def get_Node(data):
+    newNode = Node(0)
+    newNode.data = data
+    newNode.prev = newNode.next = None
+    return newNode
+
+
+def sorted_Insert(head_ref, newNode):
+    current = None
+    if (head_ref == None):
+        head_ref = newNode
+    elif ((head_ref).data >= newNode.data) :
+        newNode.next = head_ref
+        newNode.next.prev = newNode
+        head_ref = newNode
+    else :
+        current = head_ref
+        while (current.next != None and
+            current.next.data < newNode.data):
+            current = current.next
+        newNode.next = current.next
+        if (current.next != None):
+            newNode.next.prev = newNode
+        current.next = newNode
+        newNode.prev = current
+    return head_ref
+     
+
+def insertion_Sort( head_ref):
+    sorted = None
+    current = head_ref
+    while (current != None) :
+        next = current.next
+        current.prev = current.next = None
+        sorted = sorted_Insert(sorted, current)
+        current = next
+    head_ref = sorted
+    return head_ref
+ 
+
+def print_List(head):
+    while (head != None) :
+        print( head.data, end = " ")
+        head = head.next
+        
+def push(head_ref, new_data):
+    new_node = Node(0)
+    new_node.data = new_data
+    new_node.next = (head_ref)
+    new_node.prev = None
+    if ((head_ref) != None):
+        (head_ref).prev = new_node
+    (head_ref) = new_node
+    return head_ref
+ 
+# Driver Code
+if __name__ == "__main__":
+    head = None
+    head = push(head, 1)
+    head = push(head, 6)
+    head = push(head, 0)
+    head = push(head, 9)
+    head = push(head, 12)
+    head = push(head, 2)
+    print( "Doubly Linked List Before Sorting:")
+    print_List(head)
+    head = insertion_Sort(head)
+    print("\nDoubly Linked List After Sorting:")
+    print_List(head)
+ 
+
+
+
+Output:
+
+Doubly Linked List Before Sorting:
+2 12 9 0 6 1 
+Doubly Linked List After Sorting:
+0 1 2 6 9 12 
+
+
+
+#Task_06
+def binary_search(array, last, start, key):
+    if start >= last:
+        mid = len(array) // 2
+        if array[mid] == key:
+            return mid
+        elif array[mid] > key:
+            return binary_search(array, last, mid - 1, key)
+        else:
+            return binary_search(array, mid + 1, start,key)
+    else:
+        return -1
+
+array = [ 2, 4, 7, 8, 21, 30, 64, 100]
+key= 21
+result = binary_search(array, 0, len(array)-1, key)
+ 
+if result != -1:
+    print("The index of the Element is :", str(result))
+else:
+    print("This element is not present in your Array.")
+
+
+
+
+Output:
+
+The index of the Element is : 4
+
+
+
+
+#Task_07
+def fibonacci(n, second_last, last):
+    if n-1 == 0:
+        return second_last
+    else:
+        new_last = second_last + last
+        second_last = last
+        return fibonacci(n-1, second_last, new_last)
+ 
+ 
+if __name__ == "__main__":
+    print(fibonacci(9, 0, 1))
+
+
+
+Output:
+
+#Task_07
+def fibonacci(n, second_last, last):
+    if n-1 == 0:
+        return second_last
+    else:
+        new_last = second_last + last
+        second_last = last
+        return fibonacci(n-1, second_last, new_last)
+ 
+ 
+if __name__ == "__main__":
+    print("The Value is:",fibonacci(9, 0, 1))
+
+
+Output:
+
+The Value is: 21

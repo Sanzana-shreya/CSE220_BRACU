@@ -1,0 +1,189 @@
+#Task_01
+class Stack_Array:
+    def __init__(self):
+        self.stack = []
+        self.pointer = -1
+
+    def push(self, element):
+        self.stack.append(element)
+        self.pointer += 1
+
+    def pop(self):
+        value = self.stack[self.pointer]
+        self.stack = self.stack[:-1]
+        self.pointer -= 1
+        return value
+def Check_Balance(String, stack):
+    index = []
+    for x in range(len(String)):
+        if String[x] in ['(', '{', '[']:
+            stack.push(String[x])
+            index += [x]
+        elif String[x] in [')', '}', ']']:
+            if len(stack.stack) == 0:
+                    return f'This expression is NOT correct.\nError at character # {x+1} "{String[x]}"-not opened.'
+            indexList= 0
+            if len(index) != 0:
+                indexList = index[-1]
+                index = index[:-1]
+            bracket = stack.pop()
+            if bracket == '(':
+                if String[x] != ')':
+                    if indexList > x:
+                        return f'This expression is NOT correct.\nError at character # {indexList+1} "{String[indexList]}"-not closed.'
+                    else:
+                        return f'This expression is NOT correct.\nError at character # {x+1} "{String[x]}"-not opened.'
+            elif bracket == '{':
+                if String[x] != '}':
+                    if indexList < x:
+                        return f'This expression is NOT correct.\nError at character # {indexList+1} "{String[indexList]}"-not closed.'
+                    else:
+                        return f'This expression is NOT correct.\nError at character # {i+1} "{String[i]}"-not opened.'
+            elif bracket == '[':
+                if String[x] != ']':
+                    if indexList < x:
+                        return f'This expression is NOT correct.\nError at character # {indexList+1} "{String[indexList]}"-not closed.'
+                    else:
+                        return f'This expression is NOT correct.\nError at character # {x+1} "{String[x]}"-not opened.'
+            else:
+                pass
+    return 'This expression is correct.'
+
+    
+def Check_Balance_For_Stack_Array(String):
+    stack = ArrayStack()
+    return Check_Balance(String,stack)
+
+
+string_01 = '1+2*(3/4)'
+string_02 = '1+2*[3*3+{4–5(6(7/8/9)+10)–11+(12*8)]+14'
+string_03 = '1+2*[3*3+{4–5(6(7/8/9)+10)}–11+(12*8)/{13+13}]+14'
+string_04 = '1+2]*[3*3+{4–5(6(7/8/9)+10)–11+(12*8)]+14'
+print('Array based stack:\n')
+print('==============================================================================================================')
+print(Check_Balance_For_Stack_Array(string_01))
+print('==============================================================================================================')
+print(Check_Balance_For_Stack_Array(string_02))
+print('==============================================================================================================')
+print(Check_Balance_For_Stack_Array(string_03))
+print('==============================================================================================================')
+print(Check_Balance_For_Stack_Array(string_04))
+
+
+
+Outputs:
+
+Array based stack:
+
+==============================================================================================================
+This expression is correct.
+==============================================================================================================
+This expression is NOT correct.
+Error at character # 10 "{"-not closed.
+==============================================================================================================
+This expression is correct.
+==============================================================================================================
+This expression is NOT correct.
+Error at character # 4 "]"-not opened.
+
+
+#Task_02
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None    
+    
+class Stack_Linked_List:
+    def __init__(self):
+        self.head = None
+
+    def push(self, element):
+        temp = Node(element)
+        if self.head is None:
+            self.head = temp
+        else:
+            temp.next = self.head
+            self.head = temp
+
+    def pop(self):
+        remove_Node = self.head
+        self.head = self.head.next
+        temp = remove_Node.value
+        remove_Node.value = None
+        remove_Node.next = None
+        return temp
+    
+def Check_Balance(String, stack):
+    index = []
+    for y in range(len(String)):
+        if String[y] in ['(', '{', '[']:
+            stack.push(String[y])
+            index += [y]
+        elif String[y] in [')', '}', ']']:
+            if stack.head == None:
+                    return f'This expression is NOT correct.\nError at character # {y+1} "{String[y]}"-not opened.'
+            indexList= 0
+            if len(index) != 0:
+                indexList = index[-1]
+                index = index[:-1]
+            bracket = stack.pop()
+            if bracket == '(':
+                if String[y] != ')':
+                    if indexList > y:
+                        return f'This expression is NOT correct.\nError at character # {indexList+1} "{String[indexList]}"-not closed.'
+                    else:
+                        return f'This expression is NOT correct.\nError at character # {y+1} "{String[y]}"-not opened.'
+            elif bracket == '{':
+                if String[y] != '}':
+                    if indexList < y:
+                        return f'This expression is NOT correct.\nError at character # {indexList+1} "{String[indexList]}"-not closed.'
+                    else:
+                        return f'This expression is NOT correct.\nError at character # {y+1} "{String[y]}"-not opened.'
+            elif bracket == '[':
+                if String[y] != ']':
+                    if indexList < y:
+                        return f'This expression is NOT correct.\nError at character # {indexList+1} "{String[indexList]}"-not closed.'
+                    else:
+                        return f'This expression is NOT correct.\nError at character # {y+1} "{String[y]}"-not opened.'
+            else:
+                pass
+    return 'This expression is correct.'
+
+
+             
+
+def Check_Balance_For_Stack_Linked_List(string):
+    stack = Stack_Linked_List()
+    return Check_Balance(string,stack)
+
+string_01 = '1+2*(3/4)'
+string_02 = '1+2*[3*3+{4–5(6(7/8/9)+10)–11+(12*8)]+14'
+string_03 = '1+2*[3*3+{4–5(6(7/8/9)+10)}–11+(12*8)/{13+13}]+14'
+string_04 = '1+2]*[3*3+{4–5(6(7/8/9)+10)–11+(12*8)]+14'
+print('\nLinked list based stack:\n')
+print('==============================================================================================================')
+print(Check_Balance_For_Stack_Linked_List(string_01))
+print('==============================================================================================================')
+print(Check_Balance_For_Stack_Linked_List(string_02))
+print('==============================================================================================================')
+print(Check_Balance_For_Stack_Linked_List(string_03))
+print('==============================================================================================================')
+print(Check_Balance_For_Stack_Linked_List(string_04))
+
+
+
+
+Outputs:
+
+Linked list based stack:
+
+==============================================================================================================
+This expression is correct.
+==============================================================================================================
+This expression is NOT correct.
+Error at character # 10 "{"-not closed.
+==============================================================================================================
+This expression is correct.
+==============================================================================================================
+This expression is NOT correct.
+Error at character # 4 "]"-not opened.

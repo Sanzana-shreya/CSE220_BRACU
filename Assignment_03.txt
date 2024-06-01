@@ -1,0 +1,197 @@
+#Task_01
+class Node:
+    def __init__(self,value,pre_node=None,next_node=None):
+        self.value=value
+        self.pre_node=pre_node
+        self.next_node=next_node
+       
+    def printNode(self):
+        if self.value!=None:
+            print(self.value,end=' <--> ')
+        else:
+            print(self.value)
+        
+   
+
+class DoublyList:
+    def __init__(self,a):
+        self.head = Node(None, None, None)
+        self.head.next_node = self.head.pre_node = self.head
+        for i in range(len(a)):
+            newNode = Node(a[i], None, None)
+            newNode.next_node=self.head
+            newNode.pre_node=self.head.pre_node
+            self.head.pre_node.next_node=newNode
+            self.head.pre_node=newNode
+        else:
+            last_node=self.head.pre_node
+            newNode.next_node=self.head
+            newNode.pre_node=last_node
+            last_next_node=newNode
+            
+
+#-------------------------------------------------------------------------
+
+
+#Task_02
+class Node:
+    def __init__(self,value,pre_node=None,next_node=None):
+        self.value=value
+        self.pre_node=pre_node
+        self.next_node=next_node
+       
+    def printNode(self):
+            print(self.value,end=' ')
+
+   
+ #----------------(a)---------------------
+ #---------------01------------------------
+    
+class DoublyList:
+    def __init__(self,a):
+        self.head = Node(None, None, None)
+        self.head.next_node = self.head.pre_node = self.head
+        for i in range(len(a)):
+            newNode = Node(a[i], None, None)
+            newNode.next_node=self.head
+            newNode.pre_node=self.head.pre_node
+            self.head.pre_node.next_node=newNode
+            self.head.pre_node=newNode
+        else:
+            last_node=self.head.pre_node
+            newNode.next_node=self.head
+            newNode.pre_node=last_node
+            last_next_node=newNode
+            
+            
+#---------------02------------------------     
+
+
+    def showList(self):
+        n=self.head.next_node
+        if n.value is not None:
+            while n!=self.head:
+                n.printNode()
+                n=n.next_node
+        else:
+            print('Empty list')
+        
+    def node_At(self,value):
+        n=self.head.next_node
+        for x in range(0,value):
+            n=n.next_node
+        return n
+        
+    
+ #---------------03------------------------
+
+                
+    def insert(self, newElement) :
+        n = Node(newElement, None, None)
+        n.next_node = self.head.next_node
+        n.pre_node = self.head
+        self.head.next_node = n
+        n.next_node.pre_node = n
+        
+    
+ #---------------04------------------------
+
+
+    def insert_at(self, newElement, index):
+        n = self.head.next_node
+        while (n != self.head):
+            if (n.value == newElement):
+                print("Same Element")
+                return
+            n=n.next_node
+        element=self.node_At(index-1)
+        n1=Node(newElement,None,None)
+        n1.next_node=element.next_node
+        element.next_node.pre_node=n1
+        element.next_node = n1
+        n1.pre_node=element
+        
+ #---------------05-----------------------    
+    
+    
+    def remove(self,index):
+        if(index>0):
+            index=self.node_At(index)
+            pre_node = index.pre_node
+            q = index.next_node
+            pre_node.next_node = q
+            q.pre_node = pre_node    
+            index.next_node = index.pre_node = None
+            index.value = None
+        else:
+            print("Error")
+            
+#---------------06------------------------
+    
+    def removeKey(self, deletekey):
+        n=self.head.next_node
+        while(n!=self.head):
+            if (n.value!= deletekey):
+                n=n.next_node
+            else:
+                pre_node=n.pre_node
+                q=n.next_node
+                pre_node.next_node=q
+                q.pre_node=pre_node
+                n=n.next_node
+                    
+
+        
+dbl=DoublyList([10,20,30,40,50])
+dbl.showList()
+print()
+print('showList')
+print()
+dbl.insert(90)
+dbl.showList()
+print()
+print("insert")
+print()
+dbl.insert_at(80,2)
+dbl.showList()
+print()
+print('insert_at')
+print()
+dbl.remove(4)
+dbl.showList()
+print()
+print('remove')
+print()
+dbl.removeKey(2)
+dbl.showList()
+print()
+print('removeKey')
+
+
+
+Results:
+
+#02
+
+10 20 30 40 50 
+showList
+
+#03
+
+90 10 20 30 40 50 
+insert
+
+#04
+
+90 10 80 20 30 40 50 
+insert_at
+
+#05 
+
+90 10 80 20 40 50 
+remove
+
+#06
+
+90 10 80 20 40 50 
+removeKey
